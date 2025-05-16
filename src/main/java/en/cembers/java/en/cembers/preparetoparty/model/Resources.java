@@ -14,6 +14,42 @@ public class Resources {
     private int energy;
     private double moneyInEuro;
 
+    public Resources() {
+        this.timeLeftInMinutes = START_TIME_LEFT_IN_MINUTES;
+        this.energy = MAX_ENERGY;
+        this.moneyInEuro = START_MONEY;
+    }
 
+    public int getTimeLeftInMinutes() {
+        return timeLeftInMinutes;
+    }
 
+    public void setTimeLeftInMinutes(int timeLeftInMinutes) {
+        this.timeLeftInMinutes = timeLeftInMinutes;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public double getMoneyInEuro() {
+        return moneyInEuro;
+    }
+
+    public void setMoneyInEuro(double moneyInEuro) {
+        this.moneyInEuro = moneyInEuro;
+    }
+
+    @Override
+    public String toString() {
+        return "Resources{" +
+                "timeLeftInMinutes=" + timeLeftInMinutes +
+                ", energy=" + energy +
+                ", moneyInEuro=" + moneyInEuro +
+                '}';
+    }
 }
