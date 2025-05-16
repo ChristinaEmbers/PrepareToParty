@@ -1,6 +1,6 @@
 package en.cembers.preparetoparty.model;
 
-public class Resources {
+public class Resource {
 
     private static final int MIN_TIME_LEFT_IN_MINUTES=0;
     private static final int START_TIME_LEFT_IN_MINUTES=600; //todo reconsider when testing and balancing
@@ -9,12 +9,12 @@ public class Resources {
     private static final double MIN_MONEY=0.00;
     private static final double START_MONEY=100; //todo reconsider when testing and balancing
 
-
+ //todo singleton for each kind of resource
     private int timeLeftInMinutes;
     private int energy;
     private double moneyInEuro;
 
-    public Resources() {
+    public Resource() {
         this.timeLeftInMinutes = START_TIME_LEFT_IN_MINUTES;
         this.energy = MAX_ENERGY;
         this.moneyInEuro = START_MONEY;

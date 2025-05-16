@@ -6,9 +6,7 @@ import java.util.ArrayList;
  * This class is the data model for the categories food, decoration and activities, which contain the corresponding actions
  */
 public class Category {
-
-
-
+    //todo implement checks in case the lists are empty or anything is wrong with the data
     //todo find the right place and add a method to fill the lists with the corresponding actions
     //namely all actions that have the corresponding category name
     //perhaps i need a list with all actions
