@@ -71,7 +71,7 @@
                             <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="180.0" HBox.hgrow="ALWAYS">
                            <children>
-                                      <Button fx:id="btnOption1" alignment="TOP_LEFT" mnemonicParsing="false" text="Button">
+                                      <Button fx:id="btnOption1" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#executeOption1" text="Button">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -89,7 +89,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="180.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Button fx:id="btnOption2" alignment="TOP_LEFT" mnemonicParsing="false" text="Button">
+                              <Button fx:id="btnOption2" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#executeOption2" text="Button">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -107,7 +107,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="180.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Button fx:id="btnOption3" alignment="TOP_LEFT" mnemonicParsing="false" text="Button">
+                              <Button fx:id="btnOption3" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#executeOption3" text="Button">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>

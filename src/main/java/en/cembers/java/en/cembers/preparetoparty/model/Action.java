@@ -10,7 +10,7 @@ public class Action {
     private static final String DEFAULT_CATEGORY="Category has not been set";
     private static final String DEFAULT_DESCRIPTION_FOR_TEXT_LOG ="Description has not been set";
     private static final int DEFAULT_COST_IN_MINUTES=0;
-    private static final int DEFAULT_CHANGE_TO_STRESS_LEVEL=0;
+    private static final int DEFAULT_CHANGE_TO_ENERGY_LEVEL=0;
     private static final int DEFAULT_POINT_VALUE=0;
     private static final double DEFAULT_COST_IN_EURO=0.00;
 
@@ -21,7 +21,7 @@ public class Action {
     private String category;
     private String descriptionForTextLog;
     private int costInMinutes;
-    private int changeToStressLevel;
+    private int changeToEnergyLevel;
     private int pointValue;
     private double costInEuro;
     //endregion
@@ -34,7 +34,7 @@ public class Action {
         this.category = DEFAULT_CATEGORY;
         this.descriptionForTextLog = DEFAULT_DESCRIPTION_FOR_TEXT_LOG;
         this.costInMinutes = DEFAULT_COST_IN_MINUTES;
-        this.changeToStressLevel = DEFAULT_CHANGE_TO_STRESS_LEVEL;
+        this.changeToEnergyLevel = DEFAULT_CHANGE_TO_ENERGY_LEVEL;
         this.pointValue = DEFAULT_POINT_VALUE;
         this.costInEuro = DEFAULT_COST_IN_EURO;
     }
@@ -74,12 +74,12 @@ public class Action {
         this.costInMinutes = costInMinutes;
     }
 
-    public int getChangeToStressLevel() {
-        return changeToStressLevel;
+    public int getChangeToENERGYLevel() {
+        return changeToEnergyLevel;
     }
 
-    public void setChangeToStressLevel(int changeToStressLevel) {
-        this.changeToStressLevel = changeToStressLevel;
+    public void setChangeToEnergyLevel(int changeToEnergyLevel) {
+        this.changeToEnergyLevel = changeToEnergyLevel;
     }
 
     public int getPointValue() {
@@ -107,7 +107,7 @@ public class Action {
                 ", category='" + category + '\'' +
                 ", descriptionForTextLog='" + descriptionForTextLog + '\'' +
                 ", costInMinutes=" + costInMinutes +
-                ", changeToStressLevel=" + changeToStressLevel +
+                ", changeToEnergyLevel=" + changeToEnergyLevel +
                 ", pointValue=" + pointValue +
                 ", costInEuro=" + costInEuro +
                 '}';
