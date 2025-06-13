@@ -9,24 +9,56 @@ public class ScoreManager {
 // //todo write the ui for startscreen
     //todo write the ui for endscreen
 
-    int scoreFood;
-    int scoreDecoration;
-    int scoreActivity;
-    //todo decide if i just want to add remaining values to score total or use a formula
-    int scoreEnergyLeft;
-    int scoreMoneyLeft;
-    int scoreTimeLeft; //todo decide if leftover time recharges energy
+    public int getScoreForActions() {
+        return scoreForActions;
+    }
+
+    public void setScoreForActions(int scoreForActions) {
+        this.scoreForActions = scoreForActions;
+    }
+
+    public int getRemainingEnergy() {
+        return remainingEnergy;
+    }
+
+    public void setRemainingEnergy(int remainingEnergy) {
+        this.remainingEnergy = remainingEnergy;
+    }
+
+    public int getRemainingEuro() {
+        return remainingEuro;
+    }
+
+    public void setRemainingEuro(int remainingEuro) {
+        this.remainingEuro = remainingEuro;
+    }
+
+    public int getRemainingMinutes() {
+        return remainingMinutes;
+    }
+
+    public void setRemainingMinutes(int remainingMinutes) {
+        this.remainingMinutes = remainingMinutes;
+    }
+
+    int scoreForActions;
+    int remainingEnergy;
+    int remainingEuro;
+    int remainingMinutes;
 
     static int scoreTotal = 0;
 
 
-    public void increaseScoreTotal(int amountToIncreaseBy) {
-        //todo add checks for errors
-        scoreTotal += amountToIncreaseBy;
+    public void calculateScoreTotal() {
+        double totalPoints =
+                scoreForActions +
+                        (remainingEnergy * 0.5) +
+                        (remainingMinutes * 0.1) +
+                        (remainingEuro * 0.2);
 
     }
 
-    public int getScoreTotal()
+    public double getScoreTotal()
     {
         return scoreTotal;
     }

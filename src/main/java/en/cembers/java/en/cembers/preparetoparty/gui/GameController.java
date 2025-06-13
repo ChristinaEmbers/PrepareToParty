@@ -1,4 +1,4 @@
-package en.cembers.preparetoparty.logic;
+package en.cembers.preparetoparty.gui;
 
 import javafx.fxml.Initializable;
 

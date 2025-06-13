@@ -10,13 +10,13 @@ public class Resource {
     private static final int START_TIME_LEFT_IN_MINUTES=300;
     private static final int MIN_ENERGY=0;
     private static final int MAX_ENERGY=100;
-    private static final double MIN_MONEY=0.00;
-    private static final double START_MONEY=100;
+    private static final int MIN_MONEY=0;
+    private static final int START_MONEY=100;
 
  //todo singleton for each kind of resource
     private int timeLeftInMinutes;
     private int energy;
-    private double moneyInEuro;
+    private int moneyInEuro;
 
     public Resource() {
         this.timeLeftInMinutes = START_TIME_LEFT_IN_MINUTES;
@@ -40,11 +40,11 @@ public class Resource {
         this.energy = energy;
     }
 
-    public double getMoneyInEuro() {
+    public int getMoneyInEuro() {
         return moneyInEuro;
     }
 
-    public void setMoneyInEuro(double moneyInEuro) {
+    public void setMoneyInEuro(int moneyInEuro) {
         this.moneyInEuro = moneyInEuro;
     }
 
