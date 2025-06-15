@@ -2,13 +2,21 @@ package en.cembers.preparetoparty.logic;
 
 import en.cembers.preparetoparty.model.Action;
 
+import java.util.ArrayList;
+
 /**
  * The purpose of this class is to create the Action objects, that will be used in this game.
  * It will return Arrays containing 3 Actions to the Game Controller. Each array being a group of food actions/deco actions or activity actions
  */
 public class ActionBuilder {
+
+public static ArrayList<Action> foodActions= new ArrayList<Action>();
+public static ArrayList<Action> decoActions= new ArrayList<Action>();
+public static ArrayList<Action> activityActions= new ArrayList<Action>();
+
+
     //region Food Actions
-    Action food1 = new Action(
+   private Action food1 = new Action(
             "Simple Sandwiches",
             "You quickly prepare some simple sandwiches. It’s not fancy, but it works.",
             30,
@@ -16,7 +24,7 @@ public class ActionBuilder {
             6,
             5);
 
-    Action food2 = new Action(
+    private Action food2 = new Action(
             "Catering Service",
             "You order professional catering. Convenient, but pricey.",
             20,
@@ -24,7 +32,7 @@ public class ActionBuilder {
             9,
             50);
 
-    Action food3 = new Action(
+    private Action food3 = new Action(
             "Home Cooked Meal",
             "You decide to make a home cooked meal, delicious, but a lot of work.",
             120,
@@ -34,7 +42,7 @@ public class ActionBuilder {
     //endregion
 
     //region Decoration
-    Action decor1 = new Action(
+    private Action decor1 = new Action(
             "Minimal Decorations",
             "You put up a few decorations from last year.",
             15,
@@ -42,7 +50,7 @@ public class ActionBuilder {
             5,
             2);
 
-    Action decor2 = new Action(
+    private Action decor2 = new Action(
             "Colorful Banners",
             "You hang colorful banners and streamers across the room.",
             45,
@@ -50,7 +58,7 @@ public class ActionBuilder {
             8,
             8);
 
-    Action decor3 = new Action(
+    private Action decor3 = new Action(
             "Themed Setup",
             "You create a fully themed setup with lights, tablecloths and more.",
             90,
@@ -60,10 +68,8 @@ public class ActionBuilder {
 
     //endregion
 
-
-
     //region Activities
-    Action activity1 = new Action(
+    private Action activity1 = new Action(
             "Lounge Music",
             "You play some relaxed background music. Low effort, decent effect.",
             10,
@@ -71,7 +77,7 @@ public class ActionBuilder {
             4,
             0);
 
-    Action activity2 = new Action(
+    private Action activity2 = new Action(
             "Board Games",
             "You set up a variety of board games for guests to enjoy.",
             20,
@@ -79,7 +85,7 @@ public class ActionBuilder {
             9,
             20);
 
-    Action activity3 = new Action(
+    private Action activity3 = new Action(
             "Karaoke Night",
             "You organize a karaoke night. It’s loud, fun, and unforgettable.",
             120,
@@ -89,4 +95,34 @@ public class ActionBuilder {
 
     //endregion
 
+
+    private void fillArrayLists()
+    {
+        foodActions.add(food1);
+        foodActions.add(food2);
+        foodActions.add(food3);
+
+        decoActions.add(decor1);
+        decoActions.add(decor2);
+        decoActions.add(decor3);
+
+        activityActions.add(activity1);
+        activityActions.add(activity2);
+        activityActions.add(activity3);
+    }
+
+    public ArrayList<Action> getFoodActions()
+    {
+        //todo refactoring nötig, wenn dies mehr als einmal aufgerufen wird, z.b. durch replay button
+        //oder wenn food nicht als erstes aufgerufen wird
+        fillArrayLists();
+        return foodActions;}
+
+    public ArrayList<Action> getDecoActions() {
+        return decoActions;
+    }
+
+    public  ArrayList<Action> getActivityActions() {
+        return activityActions;
+    }
 }
