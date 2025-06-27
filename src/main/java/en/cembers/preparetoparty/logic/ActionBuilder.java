@@ -19,23 +19,23 @@ public class ActionBuilder {
         FOOD_ACTIONS.add(new Action(
                 "Simple Sandwiches",
                 "You quickly prepare some simple sandwiches. It’s not fancy, but it works.",
-                30, 20, 6, 5));
+                30, 20, 5, 6));
 
         FOOD_ACTIONS.add(new Action(
                 "Catering Service",
                 "You order professional catering. Convenient, but pricey.",
-                20, 5, 9, 50));
+                20, 5, 50, 9));
 
         FOOD_ACTIONS.add(new Action(
                 "Home Cooked Meal",
                 "You decide to make a home cooked meal, delicious, but a lot of work.",
-                120, 40, 13, 20));
+                120, 40, 20, 13));
 
         // Decoration Actions
         DECO_ACTIONS.add(new Action(
                 "Minimal Decorations",
                 "You put up a few decorations from last year.",
-                15, 5, 5, 2));
+                15, 5, 2, 5));
 
         DECO_ACTIONS.add(new Action(
                 "Colorful Banners",
@@ -45,23 +45,23 @@ public class ActionBuilder {
         DECO_ACTIONS.add(new Action(
                 "Themed Setup",
                 "You create a fully themed setup with lights, tablecloths and more.",
-                90, 30, 20, 30));
+                90, 30, 30, 20));
 
         // Activity Actions
         ACTIVITY_ACTIONS.add(new Action(
                 "Lounge Music",
                 "You play some relaxed background music. Low effort, decent effect.",
-                10, 5, 4, 0));
+                10, 5, 0, 4));
 
         ACTIVITY_ACTIONS.add(new Action(
                 "Board Games",
                 "You set up a variety of board games for guests to enjoy.",
-                20, 20, 9, 20));
+                20, 20, 20, 9));
 
         ACTIVITY_ACTIONS.add(new Action(
                 "Karaoke Night",
                 "You organize a karaoke night. It’s loud, fun, and unforgettable.",
-                120, 40, 14, 30));
+                120, 40, 30, 14));
     }
 
     public static ArrayList<Action> getFoodActions() {

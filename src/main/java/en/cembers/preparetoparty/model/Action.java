@@ -9,8 +9,8 @@ public class Action {
     private static final String DEFAULT_DESCRIPTION_FOR_TEXT_LOG ="Description has not been set";
     private static final int DEFAULT_COST_IN_MINUTES=0;
     private static final int DEFAULT_CHANGE_TO_ENERGY_LEVEL=0;
+    private static final int DEFAULT_COST_IN_EURO=0;
     private static final int DEFAULT_POINT_VALUE=0;
-    private static final double DEFAULT_COST_IN_EURO=0.00;
 
 //get optionset methode die alle werte liefert um btn 1,2 und 3 zu befüllen mit den jeweiligen werten
     //dafür notwendig optionset definieren
@@ -30,7 +30,7 @@ public class Action {
     private int costInMinutes;
     private int changeToEnergyLevel;
     private int pointValue;
-    private double costInEuro;
+    private int costInEuro;
     //endregion
 
     //region Constructor
@@ -46,13 +46,18 @@ public class Action {
     }
 
     public Action(String name,
-                  String descriptionForTextLog, int costInMinutes, int changeToEnergyLevel, int pointValue, double costInEuro) {
+                  String descriptionForTextLog,
+                  int costInMinutes,
+                  int changeToEnergyLevel,
+                  int costInEuro,
+                  int pointValue)
+    {
         this.name = name;
         this.descriptionForTextLog = descriptionForTextLog;
         this.costInMinutes = costInMinutes;
         this.changeToEnergyLevel = changeToEnergyLevel;
-        this.pointValue = pointValue;
         this.costInEuro = costInEuro;
+        this.pointValue = pointValue;
     }
 
     //endregion
@@ -82,7 +87,7 @@ public class Action {
         this.costInMinutes = costInMinutes;
     }
 
-    public int getChangeToENERGYLevel() {
+    public int getChangeToEnergyLevel() {
         return changeToEnergyLevel;
     }
 
@@ -98,11 +103,11 @@ public class Action {
         this.pointValue = pointValue;
     }
 
-    public double getCostInEuro() {
+    public int getCostInEuro() {
         return costInEuro;
     }
 
-    public void setCostInEuro(double costInEuro) {
+    public void setCostInEuro(int costInEuro) {
         this.costInEuro = costInEuro;
     }
     //endregion

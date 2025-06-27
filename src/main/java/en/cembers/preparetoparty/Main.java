@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(Main.class.getResource("game-administration-layout.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 750);
+        Scene scene = new Scene(fxmlLoader.load(), 750, 750);
         stage.setTitle("PrepareToParty");
         stage.setScene(scene);
         stage.show();

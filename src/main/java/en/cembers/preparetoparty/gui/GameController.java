@@ -1,6 +1,7 @@
 package en.cembers.preparetoparty.gui;
 
 import en.cembers.preparetoparty.logic.ActionBuilder;
+import en.cembers.preparetoparty.logic.ScoreManager;
 import en.cembers.preparetoparty.model.Action;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,7 +57,7 @@ public class GameController implements Initializable {
     //endregions
 
 
-    public static final int CURRENT_OPTION_SET = 0;
+    private static int currentOptionSet = 0;
     private Map<String, ArrayList<Action>> gameOptions = new HashMap<>();
 
     private void fillMap() {
@@ -69,35 +70,152 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fillMap();
-        setOptionSet1();
+        loadUiValues(currentOptionSet);
+    }
+
+    private void loadUiValues(int currentOptionSet) {
+        switch (currentOptionSet) {
+            case 0:
+                setOptionSet1();
+                break;
+            case 1:
+                setOptionSet2();
+                break;
+            case 2:
+                setOptionSet3();
+                break;
+            default: {
+                ScoreManager.calculateScoreTotal();
+                logbook.appendText("YOU WIN "+ ScoreManager.getScoreTotal() + " Points"); //todo add actual score
+            }
+        }
     }
 
     private void setOptionSet1() {
-        if (CURRENT_OPTION_SET == 0) {
+        if (currentOptionSet == 0) {
             lblChooseCategory.setText(CHOOSE_FOOD_CATEGORY);
             btnOption1.setText(gameOptions.get(FOOD_CATEGORY_KEY).get(0).getName());
+            lblOption1.setText(createCostForOptionText(
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(0).getCostInMinutes(),
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(0).getChangeToEnergyLevel(),
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(0).getCostInEuro()
+            ));
             btnOption2.setText(gameOptions.get(FOOD_CATEGORY_KEY).get(1).getName());
-            btnOption3.setText(gameOptions.get(FOOD_CATEGORY_KEY).get(2).getName());
-           // lblOption1.setText(gameOptions.get(FOOD_CATEGORY_KEY).get(0).getDescriptionForTextLog());
-            //lblOption2;
-            //lblOption3;
+            lblOption2.setText(createCostForOptionText(
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(1).getCostInMinutes(),
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(1).getChangeToEnergyLevel(),
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(1).getCostInEuro()
+            ));
 
+            btnOption3.setText(gameOptions.get(FOOD_CATEGORY_KEY).get(2).getName());
+            lblOption3.setText(createCostForOptionText(
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(2).getCostInMinutes(),
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(2).getChangeToEnergyLevel(),
+                    gameOptions.get(FOOD_CATEGORY_KEY).get(2).getCostInEuro()
+            ));
+
+//todo hardcodierung flexibel gestalten, z.b. auslagerung als konstanten
         } else {
             //todo throw exception and write error into console
         }
     }
 
     private void setOptionSet2() {
+        if (currentOptionSet == 1) {
+            lblChooseCategory.setText(CHOOSE_DECO_CATEGORY);
+            btnOption1.setText(gameOptions.get(DECO_CATEGORY_KEY).get(0).getName());
+            lblOption1.setText(createCostForOptionText(
+                    gameOptions.get(DECO_CATEGORY_KEY).get(0).getCostInMinutes(),
+                    gameOptions.get(DECO_CATEGORY_KEY).get(0).getChangeToEnergyLevel(),
+                    gameOptions.get(DECO_CATEGORY_KEY).get(0).getCostInEuro()
+            ));
+            btnOption2.setText(gameOptions.get(DECO_CATEGORY_KEY).get(1).getName());
+            lblOption2.setText(createCostForOptionText(
+                    gameOptions.get(DECO_CATEGORY_KEY).get(1).getCostInMinutes(),
+                    gameOptions.get(DECO_CATEGORY_KEY).get(1).getChangeToEnergyLevel(),
+                    gameOptions.get(DECO_CATEGORY_KEY).get(1).getCostInEuro()
+            ));
+
+            btnOption3.setText(gameOptions.get(DECO_CATEGORY_KEY).get(2).getName());
+            lblOption3.setText(createCostForOptionText(
+                    gameOptions.get(DECO_CATEGORY_KEY).get(2).getCostInMinutes(),
+                    gameOptions.get(DECO_CATEGORY_KEY).get(2).getChangeToEnergyLevel(),
+                    gameOptions.get(DECO_CATEGORY_KEY).get(2).getCostInEuro()
+            ));
+//todo hardcodierung flexibel gestalten, z.b. auslagerung als konstanten
+        } else {
+            //todo throw exception and write error into console
+        }
     }
 
     private void setOptionSet3() {
+        if (currentOptionSet == 2) {
+            lblChooseCategory.setText(CHOOSE_ACTIVITY_CATEGORY);
+            btnOption1.setText(gameOptions.get(ACTIVITY_CATEGORY_KEY).get(0).getName());
+            lblOption1.setText(createCostForOptionText(
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(0).getCostInMinutes(),
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(0).getChangeToEnergyLevel(),
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(0).getCostInEuro()
+            ));
+            btnOption2.setText(gameOptions.get(ACTIVITY_CATEGORY_KEY).get(1).getName());
+            lblOption2.setText(createCostForOptionText(
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(1).getCostInMinutes(),
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(1).getChangeToEnergyLevel(),
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(1).getCostInEuro()
+            ));
+
+            btnOption3.setText(gameOptions.get(ACTIVITY_CATEGORY_KEY).get(2).getName());
+            lblOption3.setText(createCostForOptionText(
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(2).getCostInMinutes(),
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(2).getChangeToEnergyLevel(),
+                    gameOptions.get(ACTIVITY_CATEGORY_KEY).get(2).getCostInEuro()
+            ));
+//todo hardcodierung flexibel gestalten, z.b. auslagerung als konstanten
+        } else {
+            //todo throw exception and write error into console
+        }
     }
-@FXML
-    public void executeOption1(){}
+
     @FXML
-    public void executeOption2(){}
-    @FXML
-    public void executeOption3(){}
+    public void executeOption1() {
+        executeOption(0);
+    }
 
 
+    @FXML
+    public void executeOption2() {
+        executeOption(1);
+    }
+
+    @FXML
+    public void executeOption3() {
+        executeOption(2);
+    }
+    private void executeOption(int index) {
+        switch (currentOptionSet) {
+            case 0:
+                handleOptionSelection(FOOD_CATEGORY_KEY, index);
+                break;
+            case 1:
+                handleOptionSelection(DECO_CATEGORY_KEY, index);
+                break;
+            case 2:
+                handleOptionSelection(ACTIVITY_CATEGORY_KEY, index);
+                break;
+            default: {
+
+            }
+        }
+        currentOptionSet++;
+        loadUiValues(currentOptionSet);
+    }
+
+    private void handleOptionSelection(String categoryKey, int index) {
+        logbook.appendText(gameOptions.get(categoryKey).get(index).getDescriptionForTextLog()+"\n");
+        ScoreManager.addScoreForActions(gameOptions.get(categoryKey).get(index).getPointValue());
+    }
+
+    private String createCostForOptionText(int time, int energy, int money) {
+        return "Time cost: " + time + " Energy cost: " + energy + " Price : " + money + "€";
+    }
 }

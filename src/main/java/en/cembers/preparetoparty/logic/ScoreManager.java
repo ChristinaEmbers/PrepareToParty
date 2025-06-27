@@ -6,15 +6,11 @@ package en.cembers.preparetoparty.logic;
 public class ScoreManager {
 
 //todo define how the endscreen and startscreen are supposed to look
-// //todo write the ui for startscreen
-    //todo write the ui for endscreen
+//todo write the ui for startscreen
+//todo write the ui for endscreen
 
     public int getScoreForActions() {
         return scoreForActions;
-    }
-
-    public void setScoreForActions(int scoreForActions) {
-        this.scoreForActions = scoreForActions;
     }
 
     public int getRemainingEnergy() {
@@ -41,16 +37,16 @@ public class ScoreManager {
         this.remainingMinutes = remainingMinutes;
     }
 
-    int scoreForActions;
-    int remainingEnergy;
-    int remainingEuro;
-    int remainingMinutes;
+    private static int scoreForActions;
+    private static  int remainingEnergy;
+    private static  int remainingEuro;
+    private static  int remainingMinutes;
 
-    static int scoreTotal = 0;
+    static double scoreTotal = 0;
 
 
-    public void calculateScoreTotal() {
-        double totalPoints =
+    public static void calculateScoreTotal() {
+        scoreTotal =
                 scoreForActions +
                         (remainingEnergy * 0.5) +
                         (remainingMinutes * 0.1) +
@@ -58,8 +54,14 @@ public class ScoreManager {
 
     }
 
-    public double getScoreTotal()
+    public static double getScoreTotal()
     {
         return scoreTotal;
+    }
+
+    public static void addScoreForActions(int score)
+    {
+        //todo überprüfung ob parameterwert sinnvoll
+        scoreForActions+=score;
     }
 }
