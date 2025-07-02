@@ -6,30 +6,27 @@ This Model class contains the values of the start and current values for the gam
 
 public class Resource {
 
-    private static final int MIN_TIME_LEFT_IN_MINUTES=0;
-    private static final int START_TIME_LEFT_IN_MINUTES=300;
-    private static final int MIN_ENERGY=0;
+    private static final int START_TIME =300;
     private static final int MAX_ENERGY=100;
-    private static final int MIN_MONEY=0;
     private static final int START_MONEY=100;
 
  //todo singleton for each kind of resource
-    private int timeLeftInMinutes;
-    private int energy;
-    private int moneyInEuro;
+    private static int time;
+    private static int energy;
+    private static int money;
 
     public Resource() {
-        this.timeLeftInMinutes = START_TIME_LEFT_IN_MINUTES;
+        this.time = START_TIME;
         this.energy = MAX_ENERGY;
-        this.moneyInEuro = START_MONEY;
+        this.money = START_MONEY;
     }
 
-    public int getTimeLeftInMinutes() {
-        return timeLeftInMinutes;
+    public int getTime() {
+        return time;
     }
 
-    public void setTimeLeftInMinutes(int timeLeftInMinutes) {
-        this.timeLeftInMinutes = timeLeftInMinutes;
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public int getEnergy() {
@@ -40,20 +37,20 @@ public class Resource {
         this.energy = energy;
     }
 
-    public int getMoneyInEuro() {
-        return moneyInEuro;
+    public int getMoney() {
+        return money;
     }
 
-    public void setMoneyInEuro(int moneyInEuro) {
-        this.moneyInEuro = moneyInEuro;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     @Override
     public String toString() {
         return "Resources{" +
-                "timeLeftInMinutes=" + timeLeftInMinutes +
+                "time=" + time +
                 ", energy=" + energy +
-                ", moneyInEuro=" + moneyInEuro +
+                ", moneyInEuro=" + money +
                 '}';
     }
 }
