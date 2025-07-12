@@ -4,6 +4,7 @@ import en.cembers.preparetoparty.logic.ActionBuilder;
 import en.cembers.preparetoparty.logic.ResourceController;
 import en.cembers.preparetoparty.logic.ScoreManager;
 import en.cembers.preparetoparty.model.Action;
+import en.cembers.preparetoparty.model.Resource;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class GameController implements Initializable {
     private static final String ACTIVITY_CATEGORY_KEY = "Activity";
     //endregions
 
-
+    private Resource res = new Resource();
     //region UI Elements
     @FXML
     private Label lblChooseCategory;
@@ -72,7 +73,9 @@ public class GameController implements Initializable {
     }
 
     private void loadUiValues(int currentOptionSet) {
-     //todo   disableInvalidOptions(currentOptionSet);
+        lblTime.setText(String.valueOf(res.getTime()));
+        lblMoney.setText(String.valueOf(res.getMoney()));
+        lblEnergy.setText(String.valueOf(res.getEnergy()));
         switch (currentOptionSet) {
             case 0:
                 setOptionSet(FOOD_CATEGORY_KEY);
@@ -85,7 +88,7 @@ public class GameController implements Initializable {
                 break;
             default: {
                 ScoreManager.calculateScoreTotal();
-                logbook.appendText("YOU WIN " + ScoreManager.getScoreTotal() + " Points"); //todo add actual score
+                logbook.appendText("YOU WIN " + ScoreManager.getScoreTotal() + " Points");
             }
         }
     }
@@ -193,6 +196,17 @@ public class GameController implements Initializable {
     private void handleOptionSelection(String categoryKey, int selectedOption) {
         logbook.appendText(gameOptions.get(categoryKey).get(selectedOption).getDescriptionForTextLog() + "\n");
         ScoreManager.addScoreForActions(gameOptions.get(categoryKey).get(selectedOption).getPointValue());
+        updateResources(
+                        gameOptions.get(categoryKey).get(selectedOption).getCostInMinutes(),
+                        gameOptions.get(categoryKey).get(selectedOption).getCostInEuro(),
+                        gameOptions.get(categoryKey).get(selectedOption).getChangeToEnergyLevel());
+    }
+
+    private void updateResources(int time, int energy, int money) {
+    res.setTime(res.getTime()-time);
+    res.setMoney(res.getMoney()-money);
+    res.setEnergy(res.getEnergy()-energy);
+
     }
 
     private String createCostForOptionText(int time, int energy, int money) {

@@ -28,16 +28,16 @@ public class ResourceController {
 
     public static boolean isTimeEnough(int time)
     {
-        return instance.getTime() >= time;
+        return getInstance().getTime() >= time;
     }
     public static boolean isEnergyEnough(int energy)
     {
-        return instance.getEnergy() >= energy;
+        return getInstance().getEnergy() >= energy;
     }
 
     public static boolean isMoneyEnough(int money)
     {
-        return instance.getMoney() >= money;
+        return getInstance().getMoney() >= money;
     }
 
     //todo methode die prüft ob ich genug energie habe und knopf deaktiviert, wenn nicht genug energie da ist
