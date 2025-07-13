@@ -10,7 +10,6 @@ public class Resource {
     private static final int MAX_ENERGY=100;
     private static final int START_MONEY=100;
 
- //todo singleton for each kind of resource
     private static int time;
     private static int energy;
     private static int money;
