@@ -1,7 +1,7 @@
 package en.cembers.preparetoparty.gui;
 
 import en.cembers.preparetoparty.logic.ActionBuilder;
-import en.cembers.preparetoparty.logic.ResourceController;
+import en.cembers.preparetoparty.logic.ResourceManager;
 import en.cembers.preparetoparty.logic.ScoreManager;
 import en.cembers.preparetoparty.model.Action;
 import en.cembers.preparetoparty.model.Resource;
@@ -23,13 +23,19 @@ import java.util.ArrayList;
  */
 public class GameController implements Initializable {
     //region Constants
-
     private static final String FOOD_CATEGORY_KEY = "Food";
     private static final String DECO_CATEGORY_KEY = "Decoration";
     private static final String ACTIVITY_CATEGORY_KEY = "Activity";
+    //todo remove magic numbers in the code and replace with constants
     //endregions
 
-    private Resource res = new Resource();
+    //region Variables
+    private Resource res = new Resource(); //todo use resource controller instead
+    private static int currentOptionSet = 0; //todo replace numbers with enum
+    private Map<String, ArrayList<Action>> gameOptions = new HashMap<>();
+    //endregion
+
+
     //region UI Elements
     @FXML
     private Label lblChooseCategory;
@@ -54,23 +60,38 @@ public class GameController implements Initializable {
     @FXML
     private TextArea logbook;
     //endregions
-
-
-    private static int currentOptionSet = 0;
-    private Map<String, ArrayList<Action>> gameOptions = new HashMap<>();
-
-    private void fillMap() {
-        gameOptions.put("Food", ActionBuilder.getFoodActions());
-        gameOptions.put("Decoration", ActionBuilder.getDecoActions());
-        gameOptions.put("Activity", ActionBuilder.getActivityActions());
-
+    //region Button Methods
+    @FXML
+    public void executeOption1() {
+        executeOption(0);
     }
 
+    @FXML
+    public void executeOption2() {
+        executeOption(1);
+    }
+
+    @FXML
+    public void executeOption3() {
+        executeOption(2);
+    }
+    //endregion
+
+
+    //region initialize
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fillMap();
         loadUiValues(currentOptionSet);
     }
+    //endregion
+    //region map initialisation
+    private void fillMap() {
+        gameOptions.put("Food", ActionBuilder.getFoodActions());
+        gameOptions.put("Decoration", ActionBuilder.getDecoActions());
+        gameOptions.put("Activity", ActionBuilder.getActivityActions());
+    }
+    //endregion
 
     private void loadUiValues(int currentOptionSet) {
         lblTime.setText(String.valueOf(res.getTime()));
@@ -93,23 +114,7 @@ public class GameController implements Initializable {
         }
     }
 
-    private void disableInvalidOptions(int optionNumber, int time, int energy, int money) {
-        if (!ResourceController.areResourcesEnough(time, energy, money)) {
-            switch (optionNumber) {
-                case 1:
-                    btnOption1.setDisable(true);
-                    break;
 
-                case 2:
-                    btnOption2.setDisable(true);
-                    break;
-
-                case 3:
-                    btnOption3.setDisable(true);
-                    break;
-            }
-        }
-    }
 
     private void enableAllButtons() {
         btnOption1.setDisable(false);
@@ -158,22 +163,6 @@ public class GameController implements Initializable {
                 gameOptions.get(categoryKey).get(2).getCostInEuro());
     }
 
-    @FXML
-    public void executeOption1() {
-        executeOption(0);
-    }
-
-
-    @FXML
-    public void executeOption2() {
-        executeOption(1);
-    }
-
-    @FXML
-    public void executeOption3() {
-        executeOption(2);
-    }
-
     private void executeOption(int index) {
         switch (currentOptionSet) {
             case 0:
@@ -200,6 +189,7 @@ public class GameController implements Initializable {
                         gameOptions.get(categoryKey).get(selectedOption).getCostInMinutes(),
                         gameOptions.get(categoryKey).get(selectedOption).getCostInEuro(),
                         gameOptions.get(categoryKey).get(selectedOption).getChangeToEnergyLevel());
+        //todo hier code einfuegen um scoremanager.setremainingresources zu nutzen
     }
 
     private void updateResources(int time, int energy, int money) {
@@ -209,7 +199,27 @@ public class GameController implements Initializable {
 
     }
 
+    //region UI Helper methods
+    private void disableInvalidOptions(int optionNumber, int time, int energy, int money) {
+        if (!ResourceManager.areResourcesEnough(time, energy, money)) {
+            switch (optionNumber) {
+                case 1:
+                    btnOption1.setDisable(true);
+                    break;
+
+                case 2:
+                    btnOption2.setDisable(true);
+                    break;
+
+                case 3:
+                    btnOption3.setDisable(true);
+                    break;
+            }
+        }
+    }
+
     private String createCostForOptionText(int time, int energy, int money) {
         return "Time cost: " + time + " Energy cost: " + energy + " Price : " + money + "€";
     }
+    //endregion
 }
