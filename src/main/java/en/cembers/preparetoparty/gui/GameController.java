@@ -4,19 +4,17 @@ import en.cembers.preparetoparty.logic.ActionBuilder;
 import en.cembers.preparetoparty.logic.ResourceManager;
 import en.cembers.preparetoparty.logic.ScoreManager;
 import en.cembers.preparetoparty.model.Action;
-import en.cembers.preparetoparty.model.Resource;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.ArrayList;
 
 /**
  * This class is responsible for UI interactions
@@ -30,7 +28,6 @@ public class GameController implements Initializable {
     //endregions
 
     //region Variables
-    private Resource res = new Resource(); //todo use resource controller instead
     private static int currentOptionSet = 0; //todo replace numbers with enum
     private Map<String, ArrayList<Action>> gameOptions = new HashMap<>();
     //endregion
@@ -60,6 +57,7 @@ public class GameController implements Initializable {
     @FXML
     private TextArea logbook;
     //endregions
+
     //region Button Methods
     @FXML
     public void executeOption1() {
@@ -77,6 +75,33 @@ public class GameController implements Initializable {
     }
     //endregion
 
+    //region Singletons
+    private static ResourceManager resourceManager;
+
+    public static synchronized ResourceManager getResourceManagerInstance() {
+
+        if (resourceManager == null) {
+            resourceManager = new ResourceManager();
+        }
+
+        return resourceManager;
+
+    }
+
+    private static ScoreManager scoreManager;
+
+    public static synchronized ScoreManager getScoreManagerInstance() {
+
+        if (scoreManager == null) {
+            scoreManager = new ScoreManager();
+        }
+
+        return scoreManager;
+
+    }
+
+
+    //endregion
 
     //region initialize
     @Override
@@ -84,6 +109,7 @@ public class GameController implements Initializable {
         fillMap();
         loadUiValues(currentOptionSet);
     }
+
     //endregion
     //region map initialisation
     private void fillMap() {
@@ -94,9 +120,9 @@ public class GameController implements Initializable {
     //endregion
 
     private void loadUiValues(int currentOptionSet) {
-        lblTime.setText(String.valueOf(res.getTime()));
-        lblMoney.setText(String.valueOf(res.getMoney()));
-        lblEnergy.setText(String.valueOf(res.getEnergy()));
+        lblTime.setText(String.valueOf(getResourceManagerInstance().getTime()));
+        lblMoney.setText(String.valueOf(getResourceManagerInstance().getMoney()));
+        lblEnergy.setText(String.valueOf(getResourceManagerInstance().getEnergy()));
         switch (currentOptionSet) {
             case 0:
                 setOptionSet(FOOD_CATEGORY_KEY);
@@ -108,12 +134,14 @@ public class GameController implements Initializable {
                 setOptionSet(ACTIVITY_CATEGORY_KEY);
                 break;
             default: {
-                ScoreManager.calculateScoreTotal();
-                logbook.appendText("YOU WIN " + ScoreManager.getScoreTotal() + " Points");
+                getScoreManagerInstance().setRemainingEnergy(getResourceManagerInstance().getEnergy());
+                getScoreManagerInstance().setRemainingMoney(getResourceManagerInstance().getMoney());
+                getScoreManagerInstance().setRemainingTime(getResourceManagerInstance().getTime());
+                getScoreManagerInstance().calculateScoreTotal();
+                logbook.appendText("YOU WIN " + getScoreManagerInstance().getScoreTotal() + " Points");
             }
         }
     }
-
 
 
     private void enableAllButtons() {
@@ -184,18 +212,17 @@ public class GameController implements Initializable {
 
     private void handleOptionSelection(String categoryKey, int selectedOption) {
         logbook.appendText(gameOptions.get(categoryKey).get(selectedOption).getDescriptionForTextLog() + "\n");
-        ScoreManager.addScoreForActions(gameOptions.get(categoryKey).get(selectedOption).getPointValue());
+        getScoreManagerInstance().addScoreForActions(gameOptions.get(categoryKey).get(selectedOption).getPointValue());
         updateResources(
-                        gameOptions.get(categoryKey).get(selectedOption).getCostInMinutes(),
-                        gameOptions.get(categoryKey).get(selectedOption).getCostInEuro(),
-                        gameOptions.get(categoryKey).get(selectedOption).getChangeToEnergyLevel());
-        //todo hier code einfuegen um scoremanager.setremainingresources zu nutzen
+                gameOptions.get(categoryKey).get(selectedOption).getCostInMinutes(),
+                gameOptions.get(categoryKey).get(selectedOption).getCostInEuro(),
+                gameOptions.get(categoryKey).get(selectedOption).getChangeToEnergyLevel());
     }
 
     private void updateResources(int time, int energy, int money) {
-    res.setTime(res.getTime()-time);
-    res.setMoney(res.getMoney()-money);
-    res.setEnergy(res.getEnergy()-energy);
+        getResourceManagerInstance().setTime(getResourceManagerInstance().getTime() - time);
+        getResourceManagerInstance().setMoney(getResourceManagerInstance().getMoney() - money);
+        getResourceManagerInstance().setEnergy(getResourceManagerInstance().getEnergy() - energy);
 
     }
 

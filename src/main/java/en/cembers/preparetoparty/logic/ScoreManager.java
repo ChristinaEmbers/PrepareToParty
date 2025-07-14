@@ -7,33 +7,34 @@ public class ScoreManager {
     //region Variables
     private static int scoreForActions;
     private static int remainingEnergy;
-    private static int remainingEuro;
-    private static int remainingMinutes;
+    private static int remainingMoney;
+    private static int remainingTime;
     private static double scoreTotal = 0;
     //endregion
 //todo add starting message to the textarea
-//todo singleton einfügen statt static
     //todo score auslagern in resource klasse
 
 
-
-    public static void calculateScoreTotal() {
+    //region score calculation
+    public void calculateScoreTotal() {
         scoreTotal =
                 scoreForActions +
-                        (remainingEnergy * 0.5) +
-                        (remainingMinutes * 0.1) +
-                        (remainingEuro * 0.2);
+                        (getRemainingEnergy() * 0.5) +
+                        (getRemainingTime() * 0.1) +
+                        (getRemainingMoney() * 0.2);
 
     }
 
-    public static double getScoreTotal() {
+    public double getScoreTotal() {
         return scoreTotal;
     }
 
-    public static void addScoreForActions(int score) {
+    public void addScoreForActions(int score) {
         scoreForActions += score;
     }
- //region get and set methods
+    //endregion
+
+    //region get and set methods
     public int getScoreForActions() {
         return scoreForActions;
     }
@@ -46,20 +47,20 @@ public class ScoreManager {
         this.remainingEnergy = remainingEnergy;
     }
 
-    public int getRemainingEuro() {
-        return remainingEuro;
+    public int getRemainingMoney() {
+        return remainingMoney;
     }
 
-    public void setRemainingEuro(int remainingEuro) {
-        this.remainingEuro = remainingEuro;
+    public void setRemainingMoney(int remainingEuro) {
+        this.remainingMoney = remainingEuro;
     }
 
-    public int getRemainingMinutes() {
-        return remainingMinutes;
+    public int getRemainingTime() {
+        return remainingTime;
     }
 
-    public void setRemainingMinutes(int remainingMinutes) {
-        this.remainingMinutes = remainingMinutes;
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
     }
     //endregion
 }
