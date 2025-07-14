@@ -11,8 +11,6 @@ public class ScoreManager {
     private static int remainingTime;
     private static double scoreTotal = 0;
     //endregion
-//todo add starting message to the textarea
-    //todo score auslagern in resource klasse
 
 
     //region score calculation
