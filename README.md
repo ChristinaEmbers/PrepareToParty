@@ -17,7 +17,7 @@ Ein Java/JavaFX-Partyplanungsspiel, das strategische Entscheidungen mit Ressourc
 
 - **Sprache:** Java 24
 - **UI Framework:** JavaFX
-- **Build-Tool:** Maven
+- **Build-Tool:** IntelliJ
 - **Architektur:** Model-View-Controller (MVC)
 - **Dependencies:** Ausschließlich JavaFX (keine externen Libraries)
 
