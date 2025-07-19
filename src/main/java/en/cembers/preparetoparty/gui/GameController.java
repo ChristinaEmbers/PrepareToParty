@@ -21,9 +21,6 @@ import java.util.ResourceBundle;
  */
 public class GameController implements Initializable {
     //region Constants
-    private static final String FOOD_CATEGORY_KEY = "Food";
-    private static final String DECO_CATEGORY_KEY = "Decoration";
-    private static final String ACTIVITY_CATEGORY_KEY = "Activity";
     public static final int ACTION_1_FROM_CURRENT_CATEGORY = 0;
     public static final int ACTION_2_FROM_CURRENT_CATEGORY = 1;
     public static final int ACTION_3_FROM_CURRENT_CATEGORY = 2;
@@ -31,14 +28,14 @@ public class GameController implements Initializable {
 
     //region Variables
     private static GameState currentState = GameState.CHOOSE_FOOD;
-    private static ResourceManager resourceManager;
-    private static ScoreManager scoreManager;
+    private ResourceManager resourceManager;
+    private ScoreManager scoreManager;
 
     public enum GameState {
         CHOOSE_FOOD, CHOOSE_DECORATION, CHOOSE_ACTIVITY, GAME_WON
     }
 
-    private Map<String, ArrayList<Action>> gameOptions = new HashMap<>();
+    private Map<GameState, ArrayList<Action>> gameOptions = new HashMap<>();
     //endregion
 
 
@@ -91,41 +88,43 @@ public class GameController implements Initializable {
     //region initialize
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resourceManager = ResourceManager.getInstance();
+        scoreManager = ScoreManager.getInstance();
         fillMap();
-        loadUiValues(currentState);
+        loadUiValues();
+
     }
 
     //endregion
     //region map initialisation
     private void fillMap() {
-        gameOptions.put(FOOD_CATEGORY_KEY, ActionBuilder.getFoodActions());
-        gameOptions.put(DECO_CATEGORY_KEY, ActionBuilder.getDecoActions());
-        gameOptions.put(ACTIVITY_CATEGORY_KEY, ActionBuilder.getActivityActions());
+        gameOptions.put(GameState.CHOOSE_FOOD, ActionBuilder.getFoodActions());
+        gameOptions.put(GameState.CHOOSE_DECORATION, ActionBuilder.getDecoActions());
+        gameOptions.put(GameState.CHOOSE_ACTIVITY, ActionBuilder.getActivityActions());
     }
     //endregion
 
-    private void loadUiValues(GameState currentOptionSet) {
+    private void loadUiValues() {
         lblTime.setText(String.valueOf(resourceManager.getTime()));
         lblMoney.setText(String.valueOf(resourceManager.getMoney()));
         lblEnergy.setText(String.valueOf(resourceManager.getEnergy()));
-        switch (currentOptionSet) {
-            case GameState.CHOOSE_FOOD:
-                setOptionSet(FOOD_CATEGORY_KEY);
-                break;
-            case GameState.CHOOSE_DECORATION:
-                setOptionSet(DECO_CATEGORY_KEY);
-                break;
-            case GameState.CHOOSE_ACTIVITY:
-                setOptionSet(ACTIVITY_CATEGORY_KEY);
-                break;
-            case GameState.GAME_WON:
-                scoreManager.setRemainingEnergy(resourceManager.getEnergy());
-                scoreManager.setRemainingMoney(resourceManager.getMoney());
-                scoreManager.setRemainingTime(resourceManager.getTime());
-                scoreManager.calculateScoreTotal();
-                logbook.appendText("YOU WIN " + scoreManager.getScoreTotal() + " Points");
-                break;
+        if (!(currentState == GameState.GAME_WON)) {
+            setOptionSet();
+        } else {
+            lblChooseCategory.setText(currentState.name());
+            scoreManager.setRemainingEnergy(resourceManager.getEnergy());
+            scoreManager.setRemainingMoney(resourceManager.getMoney());
+            scoreManager.setRemainingTime(resourceManager.getTime());
+            scoreManager.calculateScoreTotal();
+            logbook.appendText("YOU WIN " + scoreManager.getScoreTotal() + " Points");
+            disableAllButtons();
         }
+    }
+
+    private void disableAllButtons() {
+        btnOption1.setDisable(true);
+        btnOption2.setDisable(true);
+        btnOption3.setDisable(true);
     }
 
 
@@ -135,56 +134,56 @@ public class GameController implements Initializable {
         btnOption3.setDisable(false);
     }
 
-    private void setOptionSet(String categoryKey) {
+    private void setOptionSet() {
         enableAllButtons();
-        lblChooseCategory.setText("Choose " + categoryKey);
+        lblChooseCategory.setText(currentState.name());
 
-        setButtonOption(btnOption1, lblOption1, ACTION_1_FROM_CURRENT_CATEGORY, categoryKey);
-        setButtonOption(btnOption2, lblOption2, ACTION_2_FROM_CURRENT_CATEGORY, categoryKey);
-        setButtonOption(btnOption3, lblOption3, ACTION_3_FROM_CURRENT_CATEGORY, categoryKey);
+        setButtonOption(btnOption1, lblOption1, ACTION_1_FROM_CURRENT_CATEGORY);
+        setButtonOption(btnOption2, lblOption2, ACTION_2_FROM_CURRENT_CATEGORY);
+        setButtonOption(btnOption3, lblOption3, ACTION_3_FROM_CURRENT_CATEGORY);
     }
 
-    private void setButtonOption(Button buttonObject, Label labelObject, int actionFromCurrentCategory, String categoryKey) {
-        buttonObject.setText(gameOptions.get(categoryKey).get(actionFromCurrentCategory).getName());
+    private void setButtonOption(Button buttonObject, Label labelObject, int actionFromCurrentCategory) {
+        buttonObject.setText(gameOptions.get(currentState).get(actionFromCurrentCategory).getName());
         labelObject.setText(createCostForOptionText(
-                gameOptions.get(categoryKey).get(actionFromCurrentCategory).getCostInMinutes(),
-                gameOptions.get(categoryKey).get(actionFromCurrentCategory).getChangeToEnergyLevel(),
-                gameOptions.get(categoryKey).get(actionFromCurrentCategory).getCostInEuro()
+                gameOptions.get(currentState).get(actionFromCurrentCategory).getCostInMinutes(),
+                gameOptions.get(currentState).get(actionFromCurrentCategory).getChangeToEnergyLevel(),
+                gameOptions.get(currentState).get(actionFromCurrentCategory).getCostInEuro()
         ));
         disableInvalidOptions(actionFromCurrentCategory,
-                gameOptions.get(categoryKey).get(actionFromCurrentCategory).getCostInMinutes(),
-                gameOptions.get(categoryKey).get(actionFromCurrentCategory).getChangeToEnergyLevel(),
-                gameOptions.get(categoryKey).get(actionFromCurrentCategory).getCostInEuro());
+                gameOptions.get(currentState).get(actionFromCurrentCategory).getCostInMinutes(),
+                gameOptions.get(currentState).get(actionFromCurrentCategory).getChangeToEnergyLevel(),
+                gameOptions.get(currentState).get(actionFromCurrentCategory).getCostInEuro());
     }
 
-    private void executeOption(int index) {
+    private void executeOption(int chosenOption) {
         switch (currentState) {
             case GameState.CHOOSE_FOOD:
-                handleOptionSelection(FOOD_CATEGORY_KEY, index);
+                handleOptionSelection(chosenOption);
                 currentState = GameState.CHOOSE_DECORATION;
                 break;
             case GameState.CHOOSE_DECORATION:
-                handleOptionSelection(DECO_CATEGORY_KEY, index);
+                handleOptionSelection(chosenOption);
                 currentState = GameState.CHOOSE_ACTIVITY;
                 break;
             case GameState.CHOOSE_ACTIVITY:
-                handleOptionSelection(ACTIVITY_CATEGORY_KEY, index);
+                handleOptionSelection(chosenOption);
                 currentState = GameState.GAME_WON;
                 break;
             default: {
 
             }
         }
-        loadUiValues(currentState);
+        loadUiValues();
     }
 
-    private void handleOptionSelection(String categoryKey, int selectedOption) {
-        logbook.appendText(gameOptions.get(categoryKey).get(selectedOption).getDescriptionForTextLog() + "\n");
-        scoreManager.addScoreForActions(gameOptions.get(categoryKey).get(selectedOption).getPointValue());
+    private void handleOptionSelection(int selectedOption) {
+        logbook.appendText(gameOptions.get(currentState).get(selectedOption).getDescriptionForTextLog() + "\n");
+        scoreManager.addScoreForActions(gameOptions.get(currentState).get(selectedOption).getPointValue());
         updateResources(
-                gameOptions.get(categoryKey).get(selectedOption).getCostInMinutes(),
-                gameOptions.get(categoryKey).get(selectedOption).getCostInEuro(),
-                gameOptions.get(categoryKey).get(selectedOption).getChangeToEnergyLevel());
+                gameOptions.get(currentState).get(selectedOption).getCostInMinutes(),
+                gameOptions.get(currentState).get(selectedOption).getCostInEuro(),
+                gameOptions.get(currentState).get(selectedOption).getChangeToEnergyLevel());
     }
 
     private void updateResources(int time, int energy, int money) {
