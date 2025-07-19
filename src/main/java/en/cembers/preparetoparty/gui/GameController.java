@@ -71,17 +71,17 @@ public class GameController implements Initializable {
     //region Button Methods
     @FXML
     public void executeOption1() {
-        executeOption(FOOD);
+        executeOption(ACTION_1_FROM_CURRENT_CATEGORY);
     }
 
     @FXML
     public void executeOption2() {
-        executeOption(DECORATION);
+        executeOption(ACTION_2_FROM_CURRENT_CATEGORY);
     }
 
     @FXML
     public void executeOption3() {
-        executeOption(ACTIVITY);
+        executeOption(ACTION_3_FROM_CURRENT_CATEGORY);
     }
     //endregion
 
