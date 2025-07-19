@@ -12,6 +12,14 @@ public class ScoreManager {
     private static double scoreTotal = 0;
     //endregion
 
+    private static ScoreManager scoreManager;
+
+    public static ScoreManager getInstance() {
+        if (scoreManager == null) {
+            scoreManager = new ScoreManager();
+        }
+        return scoreManager;
+    }
 
     //region score calculation
     public void calculateScoreTotal() {

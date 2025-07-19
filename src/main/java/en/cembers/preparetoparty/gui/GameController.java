@@ -31,6 +31,8 @@ public class GameController implements Initializable {
 
     //region Variables
     private static GameState currentState = GameState.CHOOSE_FOOD;
+    private static ResourceManager resourceManager;
+    private static ScoreManager scoreManager;
 
     public enum GameState {
         CHOOSE_FOOD, CHOOSE_DECORATION, CHOOSE_ACTIVITY, GAME_WON
@@ -86,28 +88,6 @@ public class GameController implements Initializable {
     //endregions
 
 
-    //region Singletons
-    private static ResourceManager resourceManager;
-
-    public static synchronized ResourceManager getResourceManagerInstance() {
-        if (resourceManager == null) {
-            resourceManager = new ResourceManager();
-        }
-        return resourceManager;
-    }
-
-    private static ScoreManager scoreManager;
-
-    public static synchronized ScoreManager getScoreManagerInstance() {
-        if (scoreManager == null) {
-            scoreManager = new ScoreManager();
-        }
-        return scoreManager;
-    }
-
-
-    //endregion
-
     //region initialize
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -125,9 +105,9 @@ public class GameController implements Initializable {
     //endregion
 
     private void loadUiValues(GameState currentOptionSet) {
-        lblTime.setText(String.valueOf(getResourceManagerInstance().getTime()));
-        lblMoney.setText(String.valueOf(getResourceManagerInstance().getMoney()));
-        lblEnergy.setText(String.valueOf(getResourceManagerInstance().getEnergy()));
+        lblTime.setText(String.valueOf(resourceManager.getTime()));
+        lblMoney.setText(String.valueOf(resourceManager.getMoney()));
+        lblEnergy.setText(String.valueOf(resourceManager.getEnergy()));
         switch (currentOptionSet) {
             case GameState.CHOOSE_FOOD:
                 setOptionSet(FOOD_CATEGORY_KEY);
@@ -139,11 +119,11 @@ public class GameController implements Initializable {
                 setOptionSet(ACTIVITY_CATEGORY_KEY);
                 break;
             case GameState.GAME_WON:
-                getScoreManagerInstance().setRemainingEnergy(getResourceManagerInstance().getEnergy());
-                getScoreManagerInstance().setRemainingMoney(getResourceManagerInstance().getMoney());
-                getScoreManagerInstance().setRemainingTime(getResourceManagerInstance().getTime());
-                getScoreManagerInstance().calculateScoreTotal();
-                logbook.appendText("YOU WIN " + getScoreManagerInstance().getScoreTotal() + " Points");
+                scoreManager.setRemainingEnergy(resourceManager.getEnergy());
+                scoreManager.setRemainingMoney(resourceManager.getMoney());
+                scoreManager.setRemainingTime(resourceManager.getTime());
+                scoreManager.calculateScoreTotal();
+                logbook.appendText("YOU WIN " + scoreManager.getScoreTotal() + " Points");
                 break;
         }
     }
@@ -200,7 +180,7 @@ public class GameController implements Initializable {
 
     private void handleOptionSelection(String categoryKey, int selectedOption) {
         logbook.appendText(gameOptions.get(categoryKey).get(selectedOption).getDescriptionForTextLog() + "\n");
-        getScoreManagerInstance().addScoreForActions(gameOptions.get(categoryKey).get(selectedOption).getPointValue());
+        scoreManager.addScoreForActions(gameOptions.get(categoryKey).get(selectedOption).getPointValue());
         updateResources(
                 gameOptions.get(categoryKey).get(selectedOption).getCostInMinutes(),
                 gameOptions.get(categoryKey).get(selectedOption).getCostInEuro(),
@@ -208,15 +188,15 @@ public class GameController implements Initializable {
     }
 
     private void updateResources(int time, int energy, int money) {
-        getResourceManagerInstance().setTime(getResourceManagerInstance().getTime() - time);
-        getResourceManagerInstance().setMoney(getResourceManagerInstance().getMoney() - money);
-        getResourceManagerInstance().setEnergy(getResourceManagerInstance().getEnergy() - energy);
+        resourceManager.setTime(resourceManager.getTime() - time);
+        resourceManager.setMoney(resourceManager.getMoney() - money);
+        resourceManager.setEnergy(resourceManager.getEnergy() - energy);
 
     }
 
     //region UI Helper methods
     private void disableInvalidOptions(int actionFromCurrentCategory, int time, int energy, int money) {
-        if (!ResourceManager.areResourcesEnough(time, energy, money)) {
+        if (!resourceManager.areResourcesEnough(time, energy, money)) {
             switch (actionFromCurrentCategory) {
                 case ACTION_1_FROM_CURRENT_CATEGORY:
                     btnOption1.setDisable(true);

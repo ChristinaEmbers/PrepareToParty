@@ -1,14 +1,25 @@
 package en.cembers.preparetoparty.model;
 
 /**
-This Model class contains the values of the start and current values for the game relevant resources
+ * This Model class contains the values of the start and current values for the game relevant resources
  */
 
 public class Resource {
+    private static Resource resource;
 
-    private static final int START_TIME =300;
-    private static final int MAX_ENERGY=100;
-    private static final int START_MONEY=100;
+    public static Resource getInstance() {
+
+        if (resource == null) {
+            resource = new Resource();
+        }
+
+        return resource;
+
+    }
+
+    private static final int START_TIME = 300;
+    private static final int MAX_ENERGY = 100;
+    private static final int START_MONEY = 100;
 
     private static int time;
     private static int energy;
