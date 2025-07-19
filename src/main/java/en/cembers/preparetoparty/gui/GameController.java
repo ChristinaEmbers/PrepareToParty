@@ -46,33 +46,21 @@ public class GameController implements Initializable {
     //region UI Elements
     @FXML
     private Label lblChooseCategory;
+
     @FXML
     private Button btnOption1;
     @FXML
-    private Button btnOption2;
-    @FXML
-    private Button btnOption3;
-    @FXML
     private Label lblOption1;
-    @FXML
-    private Label lblOption2;
-    @FXML
-    private Label lblOption3;
-    @FXML
-    private Label lblTime;
-    @FXML
-    private Label lblEnergy;
-    @FXML
-    private Label lblMoney;
-    @FXML
-    private TextArea logbook;
-    //endregions
 
-    //region Button Methods
     @FXML
     public void executeOption1() {
         executeOption(ACTION_1_FROM_CURRENT_CATEGORY);
     }
+
+    @FXML
+    private Button btnOption2;
+    @FXML
+    private Label lblOption2;
 
     @FXML
     public void executeOption2() {
@@ -80,10 +68,26 @@ public class GameController implements Initializable {
     }
 
     @FXML
+    private Button btnOption3;
+    @FXML
+    private Label lblOption3;
+
+    @FXML
     public void executeOption3() {
         executeOption(ACTION_3_FROM_CURRENT_CATEGORY);
     }
-    //endregion
+
+    @FXML
+    private Label lblTime;
+    @FXML
+    private Label lblEnergy;
+    @FXML
+    private Label lblMoney;
+
+    @FXML
+    private TextArea logbook;
+    //endregions
+
 
     //region Singletons
     private static ResourceManager resourceManager;
