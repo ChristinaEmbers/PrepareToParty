@@ -24,19 +24,16 @@ public class GameController implements Initializable {
     private static final String FOOD_CATEGORY_KEY = "Food";
     private static final String DECO_CATEGORY_KEY = "Decoration";
     private static final String ACTIVITY_CATEGORY_KEY = "Activity";
-    private static final int FOOD = 0;
-    private static final int DECORATION = 1;
-    private static final int ACTIVITY = 2;
     public static final int ACTION_1_FROM_CURRENT_CATEGORY = 0;
     public static final int ACTION_2_FROM_CURRENT_CATEGORY = 1;
     public static final int ACTION_3_FROM_CURRENT_CATEGORY = 2;
     //endregions
 
     //region Variables
-    private static OptionType currentOptionSet = OptionType.FOOD;
+    private static GameState currentState = GameState.CHOOSE_FOOD;
 
-    public enum OptionType {
-        FOOD, DECORATION, ACTIVITY, GAME_WON
+    public enum GameState {
+        CHOOSE_FOOD, CHOOSE_DECORATION, CHOOSE_ACTIVITY, GAME_WON
     }
 
     private Map<String, ArrayList<Action>> gameOptions = new HashMap<>();
@@ -115,7 +112,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fillMap();
-        loadUiValues(currentOptionSet);
+        loadUiValues(currentState);
     }
 
     //endregion
@@ -127,21 +124,21 @@ public class GameController implements Initializable {
     }
     //endregion
 
-    private void loadUiValues(OptionType currentOptionSet) {
+    private void loadUiValues(GameState currentOptionSet) {
         lblTime.setText(String.valueOf(getResourceManagerInstance().getTime()));
         lblMoney.setText(String.valueOf(getResourceManagerInstance().getMoney()));
         lblEnergy.setText(String.valueOf(getResourceManagerInstance().getEnergy()));
         switch (currentOptionSet) {
-            case OptionType.FOOD:
+            case GameState.CHOOSE_FOOD:
                 setOptionSet(FOOD_CATEGORY_KEY);
                 break;
-            case OptionType.DECORATION:
+            case GameState.CHOOSE_DECORATION:
                 setOptionSet(DECO_CATEGORY_KEY);
                 break;
-            case OptionType.ACTIVITY:
+            case GameState.CHOOSE_ACTIVITY:
                 setOptionSet(ACTIVITY_CATEGORY_KEY);
                 break;
-            case OptionType.GAME_WON:
+            case GameState.GAME_WON:
                 getScoreManagerInstance().setRemainingEnergy(getResourceManagerInstance().getEnergy());
                 getScoreManagerInstance().setRemainingMoney(getResourceManagerInstance().getMoney());
                 getScoreManagerInstance().setRemainingTime(getResourceManagerInstance().getTime());
@@ -181,24 +178,24 @@ public class GameController implements Initializable {
     }
 
     private void executeOption(int index) {
-        switch (currentOptionSet) {
-            case OptionType.FOOD:
+        switch (currentState) {
+            case GameState.CHOOSE_FOOD:
                 handleOptionSelection(FOOD_CATEGORY_KEY, index);
-                currentOptionSet = OptionType.DECORATION;
+                currentState = GameState.CHOOSE_DECORATION;
                 break;
-            case OptionType.DECORATION:
+            case GameState.CHOOSE_DECORATION:
                 handleOptionSelection(DECO_CATEGORY_KEY, index);
-                currentOptionSet = OptionType.ACTIVITY;
+                currentState = GameState.CHOOSE_ACTIVITY;
                 break;
-            case OptionType.ACTIVITY:
+            case GameState.CHOOSE_ACTIVITY:
                 handleOptionSelection(ACTIVITY_CATEGORY_KEY, index);
-                currentOptionSet = OptionType.GAME_WON;
+                currentState = GameState.GAME_WON;
                 break;
             default: {
 
             }
         }
-        loadUiValues(currentOptionSet);
+        loadUiValues(currentState);
     }
 
     private void handleOptionSelection(String categoryKey, int selectedOption) {
