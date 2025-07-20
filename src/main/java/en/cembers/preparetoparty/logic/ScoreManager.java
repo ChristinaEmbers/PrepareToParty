@@ -22,12 +22,12 @@ public class ScoreManager {
     }
 
     //region score calculation
-    public void calculateScoreTotal() {
+    public void calculateScoreTotal(int remainingEnergy, int remainingMoney, int remainingTime) {
         scoreTotal =
                 scoreForActions +
-                        (getRemainingEnergy() * 0.5) +
-                        (getRemainingTime() * 0.1) +
-                        (getRemainingMoney() * 0.2);
+                        (remainingEnergy * 0.5) +
+                        (remainingMoney * 0.2) +
+                        (remainingTime * 0.1);
 
     }
 
