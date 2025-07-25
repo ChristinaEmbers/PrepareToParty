@@ -1,7 +1,5 @@
 # PrepareToParty
 
-> ⚠️ **Work in Progress** - Dieses Projekt befindet sich noch in aktiver Entwicklung
-
 Ein Java/JavaFX-Partyplanungsspiel, das strategische Entscheidungen mit Ressourcenmanagement verbindet. Entwickelt zur Vertiefung von Java-Kenntnissen und zur praktischen Anwendung von Architekturmustern.
 
 ## Projektübersicht
